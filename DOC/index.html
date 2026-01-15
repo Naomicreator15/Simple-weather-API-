@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        .method {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .url {
+            font-family: 'Courier New', monospace;
+            background-color: #34495e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .parameter-table th, .parameter-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .parameter-table th {
+            background-color: #f2f2f2;
+        }
+        .required {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .optional {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        .response-example {
+            background-color: #d5f4e6;
+            border: 1px solid #27ae60;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .error-example {
+            background-color: #fadbd8;
+            border: 1px solid #e74c3c;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .sidebar {
+            float: right;
+            width: 250px;
+            margin-left: 20px;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar li {
+            margin: 5px 0;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .clear {
+            clear: both;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                float: none;
+                width: 100%;
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather API Documentation</h1>
+
+        <div class="sidebar">
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#authentication">Authentication</a></li>
+                <li><a href="#endpoints">Endpoints</a></li>
+                <li><a href="#parameters">Parameters</a></li>
+                <li><a href="#responses">Responses</a></li>
+                <li><a href="#errors">Error Handling</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#rate-limits">Rate Limits</a></li>
+            </ul>
+        </div>
+
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>The Weather API is a Django-based REST API that provides real-time weather information for cities worldwide. It uses the WeatherAPI service to fetch current weather conditions, including temperature, humidity, wind speed, and air quality index.</p>
+            <p><strong>Base URL:</strong> <span class="url">http://127.0.0.1:8000/api/</span></p>
+            <p><strong>Version:</strong> 1.0.0</p>
+            <p><strong>Format:</strong> JSON</p>
+        </section>
+
+        <section id="authentication">
+            <h2>Authentication</h2>
+            <p>This API does not require authentication. However, it uses a WeatherAPI key configured on the server side. The API key is managed through environment variables for security.</p>
+        </section>
+
+        <section id="endpoints">
+            <h2>Endpoints</h2>
+
+            <div class="endpoint">
+                <h3>Get Weather Data</h3>
+                <p class="method">GET</p>
+                <p class="url">/api/weather/</p>
+                <p>Get current weather information for a specified city.</p>
+            </div>
+        </section>
+
+        <section id="parameters">
+            <h2>Parameters</h2>
+
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>city</td>
+                        <td>string</td>
+                        <td class="required">Yes</td>
+                        <td>Name of the city to get weather for</td>
+                        <td>London, New York, Tokyo</td>
+                    </tr>
+                    <tr>
+                        <td>aqi</td>
+                        <td>string</td>
+                        <td class="optional">No</td>
+                        <td>Include air quality index (yes/no)</td>
+                        <td>yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="responses">
+            <h2>Response Format</h2>
+
+            <h3>Success Response (200 OK)</h3>
+            <div class="response-example">
+                <pre class="code-block">{
+  "location": {
+    "name": "London",
+    "region": "City of London, Greater London",
+    "country": "United Kingdom",
+    "lat": 51.52,
+    "lon": -0.11,
+    "tz_id": "Europe/London",
+    "localtime_epoch": 1640995200,
+    "localtime": "2022-01-01 12:00"
+  },
+  "current": {
+    "last_updated_epoch": 1640995200,
+    "last_updated": "2022-01-01 12:00",
+    "temp_c": 5.0,
+    "temp_f": 41.0,
+    "is_day": 1,
+    "condition": {
+      "text": "Partly cloudy",
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+      "code": 1003
+    },
+    "wind_mph": 8.1,
+    "wind_kph": 13.0,
+    "wind_degree": 230,
+    "wind_dir": "SW",
+    "pressure_mb": 1015.0,
+    "pressure_in": 29.97,
+    "precip_mm": 0.0,
+    "precip_in": 0.0,
+    "humidity": 81,
+    "cloud": 75,
+    "feelslike_c": 1.5,
+    "feelslike_f": 34.7,
+    "vis_km": 10.0,
+    "vis_miles": 6.0,
+    "uv": 1.0,
+    "gust_mph": 12.1,
+    "gust_kph": 19.4
+  }
+}</pre>
+            </div>
+
+            <h3>Response with AQI</h3>
+            <p>When <code>aqi=yes</code> is specified, the response includes additional air quality information:</p>
+            <div class="response-example">
+                <pre class="code-block">{
+  "location": { ... },
+  "current": {
+    ...
+    "air_quality": {
+      "co": 201.9,
+      "no2": 3.9,
+      "o3": 68.7,
+      "so2": 2.1,
+      "pm2_5": 3.4,
+      "pm10": 4.7,
+      "us-epa-index": 1,
+      "gb-defra-index": 1
+    }
+  }
+}</pre>
+            </div>
+        </section>
+
+        <section id="errors">
+            <h2>Error Handling</h2>
+
+            <h3>Error Response Format</h3>
+            <div class="error-example">
+                <pre class="code-block">{
+  "error": "Error message description"
+}</pre>
+            </div>
+
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Status Code</th>
+                        <th>Error Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>400</td>
+                        <td>Bad Request</td>
+                        <td>Missing required 'city' parameter</td>
+                    </tr>
+                    <tr>
+                        <td>404</td>
+                        <td>Not Found</td>
+                        <td>City not found or invalid city name</td>
+                    </tr>
+                    <tr>
+                        <td>504</td>
+                        <td>Gateway Timeout</td>
+                        <td>Weather API request timed out</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>Internal Server Error</td>
+                        <td>Unexpected server error</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="examples">
+            <h2>Examples</h2>
+
+            <h3>cURL Examples</h3>
+
+            <h4>Get weather for London</h4>
+            <div class="code-block">curl "http://127.0.0.1:8000/api/weather/?city=London"</div>
+
+            <h4>Get weather for New York with AQI</h4>
+            <div class="code-block">curl "http://127.0.0.1:8000/api/weather/?city=New%20York&aqi=yes"</div>
+
+            <h4>Get weather for Tokyo</h4>
+            <div class="code-block">curl "http://127.0.0.1:8000/api/weather/?city=Tokyo"</div>
+
+            <h3>JavaScript (Fetch API)</h3>
+            <div class="code-block">// Get weather data
+fetch('http://127.0.0.1:8000/api/weather/?city=London')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+// Get weather with AQI
+fetch('http://127.0.0.1:8000/api/weather/?city=London&aqi=yes')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));</div>
+
+            <h3>Python (requests)</h3>
+            <div class="code-block">import requests
+
+# Get weather data
+response = requests.get('http://127.0.0.1:8000/api/weather/', params={'city': 'London'})
+weather_data = response.json()
+print(weather_data)
+
+# Get weather with AQI
+response = requests.get('http://127.0.0.1:8000/api/weather/', params={'city': 'London', 'aqi': 'yes'})
+weather_data = response.json()
+print(weather_data)</div>
+        </section>
+
+        <section id="rate-limits">
+            <h2>Rate Limits</h2>
+            <p>The API uses WeatherAPI as the data source. Rate limits depend on your WeatherAPI plan:</p>
+            <ul>
+                <li><strong>Free:</strong> 1,000,000 calls/month</li>
+                <li><strong>Startup:</strong> 2,000,000 calls/month</li>
+                <li><strong>Developer:</strong> 5,000,000 calls/month</li>
+                <li><strong>Professional:</strong> 10,000,000 calls/month</li>
+            </ul>
+            <p>Monitor your usage in the WeatherAPI dashboard to avoid hitting limits.</p>
+        </section>
+
+        <div class="clear"></div>
+
+        <footer style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <p>&copy; 2024 Weather API. Built with Django and WeatherAPI.</p>
+            <p>For more information, visit the <a href="../README.md">README</a> file.</p>
+        </footer>
+    </div>
+</body>
+</html>
