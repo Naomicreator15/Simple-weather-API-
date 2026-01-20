@@ -4,7 +4,7 @@ from weather.utils import fetch_weather_data
 
 class WeatherDetailView(View):
     """
-    View to handle requests for bweather details of a specific city
+    View to handle requests for weather details of a specific city
     """
     
     def get(self,request):
@@ -22,4 +22,4 @@ class WeatherDetailView(View):
 
         if error:
             return JsonResponse(data, status=error)
-        return JsonResponse(data, staus=200)
+        return JsonResponse(data, status=200)
